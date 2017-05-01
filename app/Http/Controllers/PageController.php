@@ -21,6 +21,7 @@ class PageController extends Controller
 
         $array = array(
             'url' => $request->path(),
+            'client_url' => $page_config['client_url'],
             'data' => app('db')->select($page_config['query']),
             'viewOptions' => $page_config['viewOptions']->get_data()
         );

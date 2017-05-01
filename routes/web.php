@@ -20,9 +20,18 @@ $urls = $config->get_config();
 
 // Route URLs should also be set in config?
 
+// Page requests
 foreach ($urls as $url => $setup) {
     $app->get($url, 'PageController@SetupPage');
 }
+
+// General data request, on new connection
+$app->get('foo', function () {
+    return 'Hello World';
+});
+
+
+
 //
 //$app->get('/', function () use ($app) {
 //    $results = app('db')->select("SELECT * FROM article");
