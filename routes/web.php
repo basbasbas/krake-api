@@ -16,19 +16,23 @@ use App\ConfigParser;
 
 // Grab settings in config based on route (route does not denote context)
 $config = ConfigParser::Instance();
-$urls = $config->get_config();
+$pageUrls = $config->getPages();
+$dataUrls = $config->getData();
 
 // Route URLs should also be set in config?
 
 // Page requests
-foreach ($urls as $url => $setup) {
-    $app->get($url, 'PageController@SetupPage');
+foreach ($pageUrls  as $url => $setup) {
+    $app->get($url, 'PageController@setupPage');
+}
+// Data requests
+foreach ($dataUrls  as $url => $setup) {
+    $app->get($url, 'DataController@setupData');
 }
 
-// General data request, on new connection
-$app->get('foo', function () {
-    return 'Hello World';
-});
+//$app->get('api/data', function () {
+//    return 'Hello World';
+//});
 
 
 
