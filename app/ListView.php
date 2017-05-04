@@ -11,16 +11,11 @@ class ListView
     }
 
     // TODO; Change class to method?
-    function __construct($title, $subtitle, $content)
+    function __construct($options)
     {
         $this->data = array(
             'view' => 'listView',
-            'options' => array(
-                'id' => $id,
-                'title' => $title,
-                'subtitle' => $subtitle,
-                'content' => $content,
-            )
+            'options' => $options
         );
     }
 

@@ -17,21 +17,21 @@ class DataController extends Controller
     public function setupData(Request $request)
     {
         $data = $this->config->getData();
-        $array = array();
+//        $array = array();
+        $queriedData = $data;
 
-        foreach($data as $key => $value) {
-            $array[$key];
-
+        foreach($queriedData as $key => $value) {
+            $queriedData[$key]['data'] = app('db')->select($data[$key]['query']);
         }
 
-        $array = array(
-            'url' => $request->path(),
-            'client_url' => $data['client_url'],
-            'data' => app('db')->select($data['query']),
-//            'viewOptions' => $page_config['viewOptions']->get_data()
-        );
+//        $array = array(
+//            'url' => $request->path(),
+//            'client_url' => $data['client_url'],
+//            'data' => app('db')->select($data['query']),
+////            'viewOptions' => $page_config['viewOptions']->get_data()
+//        );
 
-        return json_encode($array);
+        return json_encode($queriedData);
     }
 
 }

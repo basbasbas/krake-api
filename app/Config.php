@@ -1,23 +1,27 @@
 <?php
 namespace App;
 
-return array (
+return array(
 
     'prefixes' => array(
         'default' => 'api',
-        'view' => 'view',
+        'pages' => 'pages',
         'data' => 'data'
     ),
 
     'pages' => array(
         'articles' => array(
-            'options' => new ListView(
+            'options' => new ListView(array(
                 // Id that links to data item
-                'articles',
+                'id' => 'articles',
+                'amount' => 10,
+                'sortBy' => array('date', 'ascending'),
                 // Link attributes to view template
-                'title',
-                null,
-                'content'
+                'template' => array(
+                    'title' => 'title',
+                    'subtitle' => null,
+                    'content' => 'content',
+                ))
             )
         )
     ),
@@ -29,8 +33,11 @@ return array (
         'articles' => array(
             // Limit amount, sort etc
             'query' => 'SELECT * FROM article',
-            //        'viewOptions' => new ListView('title', null, 'content')
         ),
+//        'articles2' => array(
+//            // Limit amount, sort etc
+//            'query' => 'SELECT * FROM article',
+//        )
     )
 
 );
