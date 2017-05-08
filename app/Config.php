@@ -9,6 +9,11 @@ return array(
         'data' => 'data'
     ),
 
+    // Define common data by key in data config
+    'common_data' => array(
+        'articles'
+    ),
+
     'pages' => array(
         'articles' => array(
             'options' => new ListView(array(

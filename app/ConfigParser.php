@@ -8,6 +8,7 @@ class ConfigParser
 
     private $pages;
     private $data;
+    private $common_data;
     private $prefixes;
     private $types;
 
@@ -24,6 +25,7 @@ class ConfigParser
         );
 
         $this->prefixes = $this->config['prefixes'];
+        $this->common_data = $this->config['common_data'];
 
         foreach ($this->types as $k => $v) {
             $this->format_config_data($k);
@@ -51,7 +53,7 @@ class ConfigParser
         switch ($type) {
             case self::DATA:
                 foreach ($array as $key => $value) {
-                    $array[$key]['client_url'] = $key;
+                    $array[$key]['id'] = $key;
                 }
                 break;
             case self::PAGES:
@@ -74,8 +76,28 @@ class ConfigParser
     public function getPageUrls() {
         return array_keys($this->pages);
     }
-    public function getData() {
-        return $this->data;
+    public function getDataByIds($ids) {
+        return $this->getData($ids);
+    }
+    public function getDataById($id) {
+        return $this->getData([$id]);
+    }
+    public function getCommonData() {
+        return $this->getData();
+    }
+    public function getData($ids = null) {
+        $ids = $ids == null ? $this->common_data : $ids;
+
+        return $this->setData($ids);
+    }
+    private function setData($ids) {
+        $obj = array();
+        foreach($ids as $id) {
+            if (array_key_exists($id, $this->data)) {
+                $obj[$id] = $this->data[$id];
+            }
+        }
+        return $obj;
     }
     public function getPrefixes() {
         return $this->prefixes;

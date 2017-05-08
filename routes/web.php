@@ -26,7 +26,8 @@ foreach ($pageUrls as $url) {
     $app->get($url, 'PageController@setupPage');
 }
 // Data requests
-$app->get($prefixes['default'] . '/' . $prefixes['data'], 'DataController@setupData');
+$app->get($prefixes['default'] . '/' . $prefixes['data'], 'DataController@setupCommonData');
+$app->get($prefixes['default'] . '/' . $prefixes['data'] . '/{id}', 'DataController@setupDataById');
 
 $app->get('test', function () use ($prefixes) {
     return $prefixes['data'];
