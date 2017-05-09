@@ -15,23 +15,41 @@ class PageController extends Controller
 //        $this->config = $config->get_config();
     }
 
-    public function setupPage(Request $request)
-    {
-        $page_config = $this->config->getPages()[$request->path()];
-        $views = array();
-
-        foreach($page_config['views'] as $view) {
-            array_push($views, $view->getData());
-        }
-
-        $array = array(
-            'url' => $request->path(),
-            'client_url' => $page_config['client_url'],
-//            'data' => app('db')->select($page_config['query']),
-            'options' => $views
-        );
-
-        return json_encode($array);
+    public function setupCommonPages(Request $request) {
+        $pages = $this->config->getCommonPages();
+//        $array = array();
+//
+//        foreach ($pages as $page) {
+//            array_push($array, $this->setupPage($page));
+//        }
+        return json_encode($pages);
     }
+
+    public function setupPageByUrls(Request $request) {
+
+    }
+
+    public function setupPageByUrl(Request $request) {
+        $page = $this->config->getPageByUrl($request->path());
+//        $page_config = $this->config->getPages()[$request->path()];
+//        $array = $this->setupPage($request, $page_config);
+
+        return json_encode($page);
+    }
+
+    // TODO; replace this function to configparser / thin controller
+//    private function setupPage($request, $config) {
+//        $views = array();
+//
+//        foreach($config['views'] as $view) {
+//            array_push($views, $view->getData());
+//        }
+//
+//        return array(
+//            'url' => $request->path(),
+//            'id' => $config['id'],
+//            'options' => $views
+//        );
+//    }
 
 }

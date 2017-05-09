@@ -34,13 +34,20 @@ class DataController extends Controller
 
         return $this->setupData($data);
     }
-    public function setupDataById($id, Request $request)
+    public function setupDataByUrl(Request $request)
     {
-        $data = $this->config->getDataById($id);
+        $data = $this->config->getDataByUrl($request->path());
 
         return $this->setupData($data);
     }
+    public function setupDataByUrls(Request $request)
+    {
+    }
     private function setupData($data) {
+
+        $obj = array();
+        $formatted = array();
+
         $queriedData = $this->queryData($data);
         $json = json_encode($queriedData);
 

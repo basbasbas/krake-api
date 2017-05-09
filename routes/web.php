@@ -17,23 +17,29 @@ use App\ConfigParser;
 // Grab settings in config based on route (route does not denote context)
 $config = ConfigParser::Instance();
 $pageUrls = $config->getPageUrls();
-$prefixes = $config->getPrefixes();
+$dataUrls  = $config->getDataUrls();
+$prefixes = $config->getFullPrefixes();
 
 // Route URLs should also be set in config?
 
 // Page requests
 foreach ($pageUrls as $url) {
-    $app->get($url, 'PageController@setupPage');
+    $app->get($url, 'PageController@setupPageByUrl');
 }
 // Data requests
-$app->get($prefixes['default'] . '/' . $prefixes['data'], 'DataController@setupCommonData');
-$app->get($prefixes['default'] . '/' . $prefixes['data'] . '/{id}', 'DataController@setupDataById');
+foreach ($dataUrls as $url) {
+    $app->get($url, 'DataController@setupDataByUrl');
+}
+
+// Data requests
+$app->get($prefixes['pages'], 'PageController@setupCommonPages');
+$app->get($prefixes['data'], 'DataController@setupCommonData');
+$app->get($prefixes['pages'] . '/json/{json}', 'PageController@setupPageByUrls');
+$app->get($prefixes['data'] . '/json/{json}', 'DataController@setupDataByUrls');
 
 $app->get('test', function () use ($prefixes) {
     return $prefixes['data'];
 });
-
-
 
 //
 //$app->get('/', function () use ($app) {
