@@ -70,6 +70,7 @@ class ConfigParser
         return $array;
     }
 
+    // Verbose functions
     public function getPages() {
         return $this->pages;
     }
@@ -85,22 +86,21 @@ class ConfigParser
     public function getCommonData() {
         return $this->getData();
     }
-    public function getData($ids = null) {
+    public function getPrefixes() {
+        return $this->prefixes;
+    }
+
+    private function getData($ids = null) {
+        $obj = array();
         $ids = $ids == null ? $this->common_data : $ids;
 
-        return $this->setData($ids);
-    }
-    private function setData($ids) {
-        $obj = array();
         foreach($ids as $id) {
             if (array_key_exists($id, $this->data)) {
                 $obj[$id] = $this->data[$id];
             }
         }
+
         return $obj;
-    }
-    public function getPrefixes() {
-        return $this->prefixes;
     }
 //    public function getConfig() {
 //        return $this->config;

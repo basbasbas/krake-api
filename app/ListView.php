@@ -6,7 +6,7 @@ class ListView
 {
     private $data;
 
-    function get_data() {
+    function getData() {
         return $this->data;
     }
 

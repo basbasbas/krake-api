@@ -16,18 +16,20 @@ return array(
 
     'pages' => array(
         'articles' => array(
-            'options' => new ListView(array(
-                // Id that links to data item
-                'id' => 'articles',
-                'amount' => 10,
-                'sortBy' => array('date', 'ascending'),
-                // Link attributes to view template
-                'template' => array(
-                    'title' => 'title',
-                    'subtitle' => null,
-                    'content' => 'content',
-                ))
-            )
+            'views' => array(
+                new ListView(array(
+                        // Id that links to data item
+                        'id' => 'articles',
+                        'amount' => 10,
+                        'sortBy' => array('date', 'ascending'),
+                        // Link attributes to view template
+                        'template' => array(
+                            'title' => 'title',
+                            'subtitle' => null,
+                            'content' => 'content',
+                        ))
+                )
+            ),
         )
     ),
 

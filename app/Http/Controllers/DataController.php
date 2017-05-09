@@ -20,7 +20,9 @@ class DataController extends Controller
         $queriedData = $data;
 
         foreach($queriedData as $key => $value) {
-            $queriedData[$key]['data'] = app('db')->select($data[$key]['query']);
+            if (array_key_exists($key, $queriedData) && array_key_exists('query', $queriedData[$key])) {
+                $queriedData[$key]['data'] = app('db')->select($data[$key]['query']);
+            }
         }
 
         return $queriedData;
@@ -28,11 +30,21 @@ class DataController extends Controller
 
     public function setupCommonData(Request $request)
     {
-        return json_encode($this->queryData($this->config->getCommonData()));
+        $data = $this->config->getCommonData();
+
+        return $this->setupData($data);
     }
     public function setupDataById($id, Request $request)
     {
-        return json_encode($this->queryData($this->config->getDataById($id)));
+        $data = $this->config->getDataById($id);
+
+        return $this->setupData($data);
+    }
+    private function setupData($data) {
+        $queriedData = $this->queryData($data);
+        $json = json_encode($queriedData);
+
+        return $json;
     }
 
 }

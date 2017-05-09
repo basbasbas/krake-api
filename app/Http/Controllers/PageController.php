@@ -18,12 +18,17 @@ class PageController extends Controller
     public function setupPage(Request $request)
     {
         $page_config = $this->config->getPages()[$request->path()];
+        $views = array();
+
+        foreach($page_config['views'] as $view) {
+            array_push($views, $view->getData());
+        }
 
         $array = array(
             'url' => $request->path(),
             'client_url' => $page_config['client_url'],
 //            'data' => app('db')->select($page_config['query']),
-            'options' => $page_config['options']->get_data()
+            'options' => $views
         );
 
         return json_encode($array);
